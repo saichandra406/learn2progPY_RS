@@ -1,4 +1,4 @@
-Open the code1.PY file you have in this directory.
+Open the code1.PY and code1.rs files you have in this directory.
 You will see two functions:  max and main.
 
 In max, the algorithm is written as comments, but there is no code.
