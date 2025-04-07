@@ -17,17 +17,14 @@ def printTriangle(size):
     #your answer is starCount
     return starCount
 
-
-print("Here is a triangle with height 4")
-numStars = printTriangle(4)
-print("That triangle had {} total stars".format(numStars))
-
-#now print "Here is a triangle with height 7\n"
-print("Here is a triangle with height 7")
-
-#then call printTriangle, passing in 7, and assign the result to numStars
-numStars = printTriangle(7)
-
-#finally, print "That triangle had %d total stars\n", such that the %d 
-#prints the value of numStars
-print("That triangle had {} total stars".format(numStars))
+if __name__ == "__main__":
+    print("Here is a triangle with height 4")
+    numStars = printTriangle(4)
+    print("That triangle had {} total stars".format(numStars))
+    #now print "Here is a triangle with height 7\n"
+    print("Here is a triangle with height 7")
+    #then call printTriangle, passing in 7, and assign the result to numStars
+    numStars = printTriangle(7)
+    #finally, print "That triangle had %d total stars\n", such that the %d 
+    #prints the value of numStars
+    print(f"That triangle had {numStars} total stars")
