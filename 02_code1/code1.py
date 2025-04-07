@@ -1,17 +1,21 @@
 def wrap_around(num):
     '''
     In C, signed integers use two's complement, meaning the most significant bit (MSB) determines if the number is negative.
-    i.e MSB = 0, num +ve, MSB = 1, num = -ve
+    i.e MSB = 0, num is +ve; MSB = 1, num is -ve
     When an integer surpasses its maximum value, it flips to the minimum value and continues from there
     (or wrap around to negative)
-    e.g: for int8_t, num = 127, num + 1 gives -128 then unsigned form is num = 255
-    e.g. for int8_t, num = -1 = 0xFF, then unsigned or raw byte = 255 or x0FF 
+    e.g: for int8_t, num = 127, num + 1 gives -128 while unsigned form is num = 128
+    e.g. for int8_t, num = -1 = 0xFF, then unsigned or raw byte = 255 or x0FF
+    If num // 2 ^ {size of int type in bits} >=2 overflow occured & bytes after MSB are ignored.
+    It looks as if num was reset.
+    e.g. for int8_t, num = 0xFF, MSB = 1. 0XFF + 0x01 = 0x100, overflow occured, bytes after MSB ignored. Hence num = 0x00
     
     Method 1(used here):
-    Extract 31 bits upto LSB by remainder = num % 2^32
-    quotient gives overflow.
-    If quotient is even, extracted 31 bits is positive else its negative.
-    When its negative, to get its absolute value subtract remainder from 2^32.
+    Extract 31 bits from LSB by remainder = num % 2^32
+    Take quotient = num // 2^32 
+    If quotient is odd, the 32nd bit is 1(which is MSB for C int type) & extracted 31 bits is negative.
+    If quotient is even, extracted 31 bits is positive.
+    When its negative, to get its absolute value, subtract remainder from 2^32.
     
     Method 2:
     1.convert the value into hex string,
@@ -19,11 +23,11 @@ def wrap_around(num):
     3.convert the 4 bytes Byte string into int value.
     4.convert the Byte values into int
 
-    (a) Step 1 & 2 combined, when num is in C int range (in decimal form)
+    (a) Step 1 & 2 combined, when num is in C int range (-2_147_473_648 to +2_147_483_647)
     num_bytes = num.to_bytes(4, 'big', signed=True)
 
-    (b) when num is out of C int range (in decimal form)
-    python_num_hex = hex(num)[2:]
+    (b) when num is out of C int range
+    python_num_hex = hex(num)
     num_bytes = bytes.fromhex(python_num_hex[len(python_num_hex) - 4 :])
 
     num = int.from_bytes(num_bytes, 'big', signed=True)
