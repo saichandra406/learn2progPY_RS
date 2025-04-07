@@ -6,7 +6,7 @@ fn max(num1: i32, num2: i32) -> i32 {
     }
 }
 
-#[allow(overflowing_literals)]
+#[allow(overflowing_literals)] //ignore warning when i32 literal is overflowing i.e not between (-2147483648 & +2147483647)
 fn main() {
     println!("max(42, -69) is {}", max(42, -69));
     println!("max(33, 0) is {}", max(33, 0));
